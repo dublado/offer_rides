@@ -1,0 +1,10 @@
+<div class="col-md-8">
+
+<%= render :file => 'uicomponents/menu', :locals => { :menu => "mine"} %>
+
+<%= render :file => 'uicomponents/routeslist', :locals => { :routes => @user.routes} %>
+</div>
+<aside class="col-md-4">
+	<%= render :file => 'uicomponents/map' %>
+	<div class="current_route_data"></div>
+</div>

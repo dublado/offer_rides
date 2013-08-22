@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Offerrides</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <% stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+  <script src="/js/jquery.jscroll.js"></script>
+  
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAOPOE5a8Eoyn4YU_O3TW6Yxwkk3A-RHJQ&sensor=false"></script>
+
+  <link href="/bootstrap/dist/css/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="/bootstrap/dist/css/bootstrap-theme.css" media="all" rel="stylesheet" type="text/css" />
+  
+  <style>
+    #route_steps {
+      height: 300px;
+      overflow-y: scroll;
+      margin-top: 20px;
+    }
+
+    nav {
+      margin-bottom: 20px !important;
+    }
+
+    #notice {
+      position: absolute;
+      margin: 0 auto;
+      padding: 10px 20px;
+      width: 100%;
+      max-width: 980px;
+      left: 50%;
+      margin-left: -490px;
+      top: 100px;
+    }
+
+    form footer {
+      margin-top: 20px;
+    }
+  </style>
+  
+
+</head>
+<body>
+
+<header>
+<div class="pull-right">
+<% if current_user then %>
+  <% if current_user.avatar_url then %>
+  <img src="<%= current_user.avatar_url %>"  />
+  <% end %>
+  <%= current_user.label %> - (<%= current_user.email %>)
+  <%= link_to "Sair", destroy_user_session_path, :method => "delete" %>
+<% end %>
+</div>
+</header>
+<% if flash[:notice] %>
+<p id="notice" class="label label-success"><%= notice %></p>
+<% end %>
+
+<section class="container">
+  <h1>Sistema de caronas</h1>
+  <div class="row-fluid">
+<%= yield %>
+  </div>
+</section>
+
+</body>
+</html>

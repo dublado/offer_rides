@@ -1,0 +1,24 @@
+
+<div class="scrollfeed">
+<ul class="routes_list list-group">
+<% routes.each_with_index do |r, index| %>
+<li class="list-group-item row-fluid" <% if @colors then %>style="color: <%= @colors[index] %>" data-color="<%= @colors[index] %>"<% end %>>
+	<span class="col-md-8">De <%= r.start_address %> para <%= r.end_address %></span>
+	<span class="col-md-12">
+	<%= link_to "ver", route_path(r), :class => "show_map btn btn-primary" %>
+
+	<% if can? :manage, r %>
+		<%= link_to "editar", edit_route_path(r), :class => "btn btn-primary" %>
+		<%= link_to "apagar", route_path(r), :method=> "delete", :class => "btn btn-danger" %>
+	<% end %>
+	</span>
+<% end %>
+<% if @routes.total_pages != @routes.current_page then %>
+<li>
+	<% @next_p = @routes.current_page + 1 %>
+	<a href="?page=<%= @next_p %>" class="myscroll btn btn-success more">Mais</a>
+</li>
+<% end %>
+</ul>
+</div>
+

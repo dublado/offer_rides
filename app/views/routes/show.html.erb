@@ -1,0 +1,27 @@
+<div class="col-md-12">
+<%= render :file => 'uicomponents/menu', :locals => { :menu => ""} %>
+<div style="display: none;">
+<input type="text" value="<%= @route.start_point %>" id="route_start_point" />
+<input type="text" value="<%= @route.end_point %>" id="route_end_point" />
+<input type="text" value="<%= @route.path %>" id="route_path" />
+</div>
+<%= render :file => 'uicomponents/map' %>
+<div class="route_data">
+<div id="route_steps">
+<ul>
+	
+</ul>
+</div>
+Por <%= @route.user.label %><br />
+<% if @route.is_favorited current_user then %>
+<%= link_to "desfavoritar", favorite_route_path(@route), :class => "btn btn-danger favorite_delete" %>
+<% else %>
+<%= link_to "favoritar", favorite_add_route_path(@route), :class => "btn btn-success favorite_add" %>
+<% end %>
+</div>
+
+
+<%= link_to 'Edit', edit_route_path(@route) %> |
+<%= link_to 'Back', routes_path %>
+
+</div>
