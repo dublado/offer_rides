@@ -14,17 +14,11 @@
 //= require jquery_ujs
 //= require_tree .
 
-function initialize() {
-	
-	return false;
-	
-	var map = new google.maps.Map(document.getElementById("map_canvas"),
-	    mapOptions);
-};
-
-
 
 $(document).ready(function() {
+
+	var my_app = new MyApp();
+
 
 	$('.scrollfeed').jscroll({
       autoTrigger : false,
@@ -71,8 +65,8 @@ $(document).ready(function() {
 			
 		},
 		render: function() {
-			var data = this.model.toJSON();
-			var el = this.el;
+			var data = this.model.toJSON(),
+				el = this.el;
 
 			if($("#keep_directions").length == 0) {
 				var mapOptions = {
@@ -90,8 +84,8 @@ $(document).ready(function() {
 			var marker1 = new google.maps.Marker({
 				map: map,
 				position: data.start_point
-			});
-			var marker2 = new google.maps.Marker({
+			}),
+				marker2 = new google.maps.Marker({
 				map: map,
 				position: data.end_point
 			});
@@ -119,59 +113,51 @@ $(document).ready(function() {
 			var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 			directionsService = new google.maps.DirectionsService();
 
-			//if(data.mode == "view") {
-			//	directionsService.route(request, function(response, status) {
-			//		if (status == google.maps.DirectionsStatus.OK) {
-			//			directionsDisplay.setDirections(response);
-			//		}
-			//	});
-			//} else {
-				var first_time = true;
-				google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
-					if(first_time) {
-						first_time = false;
-						return false;
+			
+			var first_time = true;
+			google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
+				if(first_time) {
+					first_time = false;
+					return false;
+				}
+				var rs = directionsDisplay.directions.routes[0];
+				var arr = [], d = [];
+				for(var i=0; i<rs.legs.length; i++) {
+					var leg = rs.legs[i];
+					if(leg.via_waypoints!="")
+						arr.push(leg.via_waypoints);
+					
+					for(var k=0;k<leg.steps.length;k++) {
+						d.push(leg.steps[k].instructions);
 					}
-					var rs = directionsDisplay.directions.routes[0];
-					var arr = [], d = [];
-					for(var i=0; i<rs.legs.length; i++) {
-						var leg = rs.legs[i];
-						if(leg.via_waypoints!="")
-							arr.push(leg.via_waypoints);
-						
-						for(var k=0;k<leg.steps.length;k++) {
-							d.push(leg.steps[k].instructions);
-						}
-					}
+				}
 
+				var step_view = new StepView({ model: null});
+				step_view.directions = d;
+				step_view.render();
+
+		    	$("#route_path").val(arr);
+		  	});
+
+			directionsService.route(request, function(response, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+						
+					directionsDisplay.setDirections(response);
+
+					var rleg = directionsDisplay.directions.routes[0].legs[0],
+						steps = rleg.steps, w = [], d = [];
+					
+					for(var i=0;i<steps.length;i++) {
+						d.push(steps[i].instructions);
+						w[i] = steps[1].lat_lngs;
+					}
 					var step_view = new StepView({ model: null});
 					step_view.directions = d;
 					step_view.render();
-
-			    	$("#route_path").val(arr);
-			  	});
-
-				directionsService.route(request, function(response, status) {
-					if (status == google.maps.DirectionsStatus.OK) {
-							
-						directionsDisplay.setDirections(response);
-
-						var rleg = directionsDisplay.directions.routes[0].legs[0];
-
-						var steps = rleg.steps, w = [], d = [];
-						
-						for(var i=0;i<steps.length;i++) {
-							d.push(steps[i].instructions);
-							w[i] = steps[1].lat_lngs;
-						}
-						var step_view = new StepView({ model: null});
-						step_view.directions = d;
-						step_view.render();
-						$("#route_start_point").val(data.start_point);
-						$("#route_end_point").val(data.end_point);
-					}
-				});
-			//}
+					$("#route_start_point").val(data.start_point);
+					$("#route_end_point").val(data.end_point);
+				}
+			});
 		  	
 		}
 	});
@@ -181,11 +167,11 @@ $(document).ready(function() {
 		directions: [],
 		initialize: function() {},
 		render: function() {
-			var data = this.directions;
-			var el = this.el;
+			var data = this.directions,
+				el = this.el,
+				html = "";
 
 			$(el).children("ul").html("");
-			var html = "";
 			for(var i=0; i<data.length; i++) {
 				html+= "<li class=\"list-group-item\">" + data[i] + "</li>";
 			}
@@ -201,29 +187,27 @@ $(document).ready(function() {
 		}
 	});
 
-	var route = new Route();
+	var route = new Route(),
+		my_map = new Map({model: route}),
+		geocoder = new google.maps.Geocoder(),
+		steps = [];
+
 	route.set({start_point: -34.397, end_point: 150.644});
-	
-
-	var my_map = new Map({model: route});
-	var geocoder;
-	geocoder = new google.maps.Geocoder();
-
-
-	var steps = [];
-	route.set("mode", "view");
 
 	if($("#route_start_point").length > 0 && $("#route_start_point").val()!="") {
-		route.set("start_point", make_ln($("#route_start_point").val()));
-		route.set("end_point", make_ln($("#route_end_point").val()));
 
-		
 		var data = $("#route_path").val().split("),(");
 		for(var i=0; i<data.length; i++) {
 			if(data[i]!="")
-				steps.push({location: make_ln(data[i])})
+				steps.push({location: my_app.make_ln(data[i])})
 		}
-		route.set("steps", steps);
+
+		route.set({
+			start_point: my_app.make_ln($("#route_start_point").val()),
+			end_point: my_app.make_ln($("#route_end_point").val()),
+			steps: steps
+		});
+
 		my_map.render();	
 	};
 
@@ -236,14 +220,14 @@ $(document).ready(function() {
 		.done(function(responseText) {
 
 			var t = $(responseText), 
-				s =  make_ln(t.filter("section").find("#route_start_point").val()),
-				e =  make_ln(t.filter("section").find("#route_end_point").val()),
+				s =  my_app.make_ln(t.filter("section").find("#route_start_point").val()),
+				e =  my_app.make_ln(t.filter("section").find("#route_end_point").val()),
 				data = t.filter("section").find("#route_path").val().split("),("),
 				steps = [];
 
 			for(var i=0; i<data.length; i++) {
 				if(data[i]!="")
-					steps.push({location: make_ln(data[i])})
+					steps.push({location: my_app.make_ln(data[i])})
 			}
 
 			route.set({
@@ -261,49 +245,47 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 
-	$(document).on("click", "a.favorite_delete", function(event) {
+	$(document).on("click", "a.favorite_item", function(event) {
 		var btn = this;
 		var url = $(this).attr("href");
+		var type = $(this).data("type");
 
 		$
-		.when( $.ajax({url: url, type: "delete"}) )
+		.when( $.ajax({url: url, type: type}) )
 		.done(function(responseText) {
 
 			$(btn).remove();
 			$("body").append("<p id='notice' class='label label-success'>" + responseText + "</p>");
 			$("#notice").fadeOut({
-		    	duration: 2000
+		    	duration: 2000,
+		    	complete: function() {
+			    	$("#notice").remove();
+			    }
 		    });
 
 		});
 		
 		event.preventDefault();
 	});
-
-	$(document).on("click", "a.favorite_add", function(event) {
-		var btn = this;
-		var url = $(this).attr("href");
-
-		$
-		.when( $.ajax({url: url, type: "put"}) )
-		.done(function(responseText) {
-
-			$(btn).remove();
-			$("body").append("<p id='notice' class='label label-success'>" + responseText + "</p>")
-
-			$("#notice").fadeOut({
-		    	duration: 2000
-		    });
-
-		});
-		
-		event.preventDefault();
-	});
-	
 	
 });
 
-var make_ln = function(str) {
-	var arr = str.replace("(", "").replace(")", "").split(",");
-	return new google.maps.LatLng(arr[0], arr[1]);
+var MyApp;
+function MyApp(){
+	var instance;
+
+	// Override the original implementation.
+	MyApp = function() {
+		return instance;
+	};
+
+	// Set the instance.
+  	instance = this;
+
+	instance.make_ln = function(str) {
+		var arr = str.replace("(", "").replace(")", "").split(",");
+		return new google.maps.LatLng(arr[0], arr[1]);
+	};
+  	
 };
+

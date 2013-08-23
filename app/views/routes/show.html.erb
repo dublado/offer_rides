@@ -14,9 +14,9 @@
 </div>
 Por <%= @route.user.label %><br />
 <% if @route.is_favorited current_user then %>
-<%= link_to "desfavoritar", favorite_route_path(@route), :class => "btn btn-danger favorite_delete" %>
+<%= link_to "desfavoritar", favorite_route_path(@route), :class => "btn btn-danger favorite_item", :data => { :type =>"delete"} %>
 <% else %>
-<%= link_to "favoritar", favorite_add_route_path(@route), :class => "btn btn-success favorite_add" %>
+<%= link_to "favoritar", favorite_add_route_path(@route), :class => "btn btn-success favorite_item", :data => { :type => "put" } %>
 <% end %>
 </div>
 
