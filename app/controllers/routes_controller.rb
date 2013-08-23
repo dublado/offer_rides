@@ -115,4 +115,9 @@ class RoutesController < ApplicationController
 
     end
   end
+
+  def search
+    logger.info params[:k]
+    @routes = Route.paginate(:page => params[:page], :per_page => 10, :conditions => ["steps like ?", "%#{params[:k]}%"])
+  end
 end

@@ -3,5 +3,5 @@
 	<li <% if menu == "available" then %>class="active"<% end %>><%= link_to 'Ver rotas', routes_path %></li>
 	<li <% if menu == "offer" then %>class="active"<% end %>><%= link_to 'Oferecer carona', new_route_path%></li>
 	<li <% if menu == "mine" then %>class="active"<% end %>><%= link_to 'Minhas rotas', profile_path %></li>
-	<li <% if menu == "watching" then %>class="active"<% end %>><%= link_to 'Monitorando', watching_users_path %></li>
+	<li <% if menu == "watching" then %>class="active"<% end %>><%= link_to 'Favoritas', watching_users_path %></li>
 </nav>

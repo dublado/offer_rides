@@ -65,7 +65,7 @@
             $(document).on('click.jscroll', _options.nextSelector, function() {
                 _nextWrap(_$next);
                 _load();
-                $(this).remove();
+                $(this).parent().remove();
                 return false;
             });
         }
@@ -92,6 +92,7 @@
         // Find the next link's parent, or add one, and hide it
         function _nextWrap($next) {
              if (_options.pagingSelector) {
+
                 var $parent = $next.closest(_options.pagingSelector).hide();
              } else {
                 var $parent = $next.parent().not('.jscroll-inner,.jscroll-added').addClass('jscroll-next-parent').hide();

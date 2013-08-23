@@ -27,14 +27,18 @@
     <%= f.text_field :start_point %>
     <%= f.text_field :end_point %>
     <%= f.text_field :path %>
+    <%= f.text_field :steps %>
 </div>
 
-  <div id="route_steps" class="col-md-12">
+  <div id="route_steps_data" class="col-md-12">
     <ul class="list-group"></ul>
   </div>
 
   <footer class="col-md-12">
     <%= link_to 'Voltar', routes_path, :class => "btn btn-primary" %>
+    <% if @route.id? then %>
+    <%= link_to "apagar", route_path(@route), :method=> "delete", :class => "btn btn-danger" %>
+    <% end %>
     <%= f.submit "salvar", :class => "btn btn-success" %>
   </footer>
 <% end %>

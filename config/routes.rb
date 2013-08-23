@@ -13,6 +13,9 @@ Offerrides::Application.routes.draw do
   resources :routes do
     put :favorite, on: :member, :as => "favorite_add"
     delete :favorite_delete, on: :member, :as => "favorite"
+    collection do
+      get :search, :as => "search"
+    end
   end
 
   match 'profile/me' => 'users#profile', :as => "profile"

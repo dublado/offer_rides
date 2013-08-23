@@ -53,15 +53,32 @@ $(document).ready(function() {
 		el: "#map_canvas",
 		map: null,
 		rebuild_map : false,
+		map_options : {
+			center: new google.maps.LatLng(-33, 151),
+			zoom: 8,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			mapTypeControl: true,
+		    mapTypeControlOptions: {
+		        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+		        position: google.maps.ControlPosition.BOTTOM_CENTER
+		    },
+		    panControl: true,
+		    panControlOptions: {
+		        position: google.maps.ControlPosition.TOP_RIGHT
+		    },
+		    zoomControl: true,
+		    zoomControlOptions: {
+		        style: google.maps.ZoomControlStyle.LARGE,
+		        position: google.maps.ControlPosition.RIGHT_CENTER
+		    },
+		    scaleControl: true,
+		    scaleControlOptions: {
+		        position: google.maps.ControlPosition.TOP_LEFT
+		    }
+		},
 		initialize: function() {
 			var el = this.el;
-			
-			var mapOptions = {
-			  center: new google.maps.LatLng(-33, 151),
-			  zoom: 8,
-			  mapTypeId: google.maps.MapTypeId.ROADMAP
-			};
-			this.map = new google.maps.Map(el, mapOptions);
+			this.map = new google.maps.Map(el, this.map_options);
 			
 		},
 		render: function() {
@@ -69,12 +86,7 @@ $(document).ready(function() {
 				el = this.el;
 
 			if($("#keep_directions").length == 0) {
-				var mapOptions = {
-				  center: new google.maps.LatLng(-33, 151),
-				  zoom: 8,
-				  mapTypeId: google.maps.MapTypeId.ROADMAP
-				};
-				this.map = new google.maps.Map(el, mapOptions);	
+				this.map = new google.maps.Map(el, this.map_options);	
 			}
 			
 			
@@ -102,7 +114,6 @@ $(document).ready(function() {
 			  draggable: true,
 			  map: map
 			};
-
 			if(data.color) {
 				rendererOptions.polylineOptions = {
 				  	strokeColor: data.color
@@ -136,7 +147,8 @@ $(document).ready(function() {
 				step_view.directions = d;
 				step_view.render();
 
-		    	$("#route_path").val(arr);
+		    	$("#route_path").val(d);
+		    	$("#route_steps").val(arr);
 		  	});
 
 			directionsService.route(request, function(response, status) {
@@ -156,6 +168,7 @@ $(document).ready(function() {
 					step_view.render();
 					$("#route_start_point").val(data.start_point);
 					$("#route_end_point").val(data.end_point);
+					$("#route_steps").val(d);
 				}
 			});
 		  	
@@ -163,7 +176,7 @@ $(document).ready(function() {
 	});
 
 	var StepView = Backbone.View.extend({
-		el: "#route_steps",
+		el: "#route_steps_data",
 		directions: [],
 		initialize: function() {},
 		render: function() {
@@ -213,7 +226,7 @@ $(document).ready(function() {
 
 	$(document).on("click", "a.show_map", function() {
 
-		var c = ($(this).parent().parent().data("color"));
+		var c = ($(this).parent().data("color"));
 		var url = $(this).attr("href");
 		$
 		.when( $.ajax({url: url}) )
