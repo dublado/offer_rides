@@ -23,7 +23,7 @@ class AuthenticationsController < ApplicationController
 		    #session[:facebook_auth] = authentication.token
 		    session[:facebook_auth] = auth['credentials']['token']
 
-		    redirect_to feed_path
+		    redirect_to root_path
 
 		  else
 		    # Authentication not found, thus a new user.

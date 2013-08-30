@@ -5,7 +5,7 @@
 <li class="list-group-item row-fluid clearfix" <% if @colors then %>style="color: <%= @colors[index] %>" data-color="<%= @colors[index] %>"<% end %>>
 	<span class="col-md-10">De <%= r.start_address %> para <%= r.end_address %></span>
 	
-	<%= link_to raw('<span class="glyphicon glyphicon-eye-open"></span>'), route_path(r), :class => "show_map btn btn-primary", :title => "ver" %>
+	<%= link_to raw('<span class="glyphicon glyphicon-picture"></span>'), route_path(r), :class => "show_map btn btn-primary", :title => "ver" %>
 	<% if can? :manage, r %>
 		<%= link_to raw('<span class="glyphicon glyphicon-edit"></span>'), edit_route_path(r), :class => "btn btn-primary", :title => "editar" %>
 		
