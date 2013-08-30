@@ -22,6 +22,9 @@ requirejs.config({
       },
       map : {
         exports: "Map"
+      },
+      jquery_ujs : {
+        
       }
   }
 });

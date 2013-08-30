@@ -297,8 +297,6 @@ var MyApp;
   	
 });
 */
-
-
 define([
 	'jquery',
 	"scroll"], function($) {
@@ -311,6 +309,27 @@ define([
 
 	    $("#notice").fadeOut({
 	    	duration: 2000
+	    });
+
+	    $(".btn-danger").on("click", function() {
+	    	var link = $(this);
+
+			var href = $(link).attr("href"),
+			method = link.data('method'),
+			csrf_token = $('meta[name=csrf-token]').attr('content'),
+			csrf_param = $('meta[name=csrf-param]').attr('content'),
+			form = $('<form method="post" action="' + href + '"></form>'),
+			metadata_input = '<input name="_method" value="' + method + '" type="hidden" />';
+
+			if (csrf_param !== undefined && csrf_token !== undefined) {
+				metadata_input += '<input name="' + csrf_param + '" value="' + csrf_token + '" type="hidden" />';
+			}
+
+			
+
+			form.append(metadata_input).appendTo('body');
+			form.submit();
+			return false;
 	    });
 
 	}

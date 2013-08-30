@@ -117,8 +117,8 @@ var Map = function() {
 					step_view.directions = d;
 					step_view.render();
 
-			    	$("#route_path").val(d);
-			    	$("#route_steps").val(arr);
+			    	$("#route_path").val(arr);
+			    	$("#route_steps").val(d);
 			  	});
 
 				directionsService.route(request, function(response, status) {
