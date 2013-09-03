@@ -195,9 +195,12 @@ var Map = function() {
 		};
 
 		$(document).on("click", "a.show_map", function() {
+			var c = ($(this).parent().data("color")),
+				url = $(this).attr("href");
 
-			var c = ($(this).parent().data("color"));
-			var url = $(this).attr("href");
+			$(".routes_list li").removeClass("active");
+			$(this).parent().addClass("active");
+
 			$
 			.when( $.ajax({url: url}) )
 			.done(function(responseText) {
@@ -225,6 +228,7 @@ var Map = function() {
 				$(".current_route_data").html(h);
 
 			});
+
 			event.preventDefault();
 		});
 

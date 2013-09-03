@@ -1,10 +1,10 @@
 <div class="col-md-12">
 <%= render :file => 'uicomponents/menu', :locals => { :menu => ""} %>
-<div style="display: none;">
-<input type="text" value="<%= @route.start_point %>" id="route_start_point" />
-<input type="text" value="<%= @route.end_point %>" id="route_end_point" />
-<input type="text" value="<%= @route.path %>" id="route_path" />
-</div>
+
+<input type="hidden" value="<%= @route.start_point %>" id="route_start_point" />
+<input type="hidden" value="<%= @route.end_point %>" id="route_end_point" />
+<input type="hidden" value="<%= @route.path %>" id="route_path" />
+
 <%= render :file => 'uicomponents/map' %>
 <div class="route_data">
 	<div id="route_steps_data">
@@ -33,5 +33,3 @@
 
 </div>
 
-<%= link_to 'Editar', edit_route_path(@route), :class => "btn btn-primary" %> |
-<% link_to 'Back', routes_path %>
