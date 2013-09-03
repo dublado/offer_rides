@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130823153207) do
+ActiveRecord::Schema.define(:version => 20130903134954) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -32,13 +32,14 @@ ActiveRecord::Schema.define(:version => 20130823153207) do
   create_table "routes", :force => true do |t|
     t.text     "start_point"
     t.text     "end_point"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.string   "user_id"
     t.text     "path"
     t.text     "start_address"
     t.text     "end_address"
     t.text     "steps"
+    t.string   "period",        :limit => 10
   end
 
   create_table "users", :force => true do |t|

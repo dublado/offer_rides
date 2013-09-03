@@ -1,6 +1,10 @@
 <div class="col-md-8">
 <%= render :file => 'uicomponents/menu', :locals => { :menu => "offer"} %>
 <%= form_for @route, html: { role: "form"}  do |f| %>
+  <%= f.hidden_field :start_point %>
+  <%= f.hidden_field :end_point %>
+  <%= f.hidden_field :path %>
+  <%= f.hidden_field :steps %>
   <% if @route.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@route.errors.count, "error") %> prohibited this route from being saved:</h2>
@@ -19,21 +23,21 @@
   
     <%= f.label :end_address %>
     <%= f.text_field :end_address, :class => "form-control", :placeholder => "Rua, número, bairro, cidade..." %>
+
+    <%= f.label :period %>
+    <%= select_tag("route[period]", options_for_select(@route.periods, @route.period?)) %>
+
+
   </div>
 
   <a href="#" id="trace_route" class="btn btn-success">traçar rota</a>
-
-
-    <%= f.hidden_field :start_point %>
-    <%= f.hidden_field :end_point %>
-    <%= f.hidden_field :path %>
-    <%= f.hidden_field :steps %>
 
   <div id="route_steps_data" class="col-md-12">
     <ul class="list-group"></ul>
   </div>
 
   <footer class="col-md-12">
+    <%= link_to 'Voltar', routes_path, :class => "btn btn-primary" %>
     <% if @route.id? then %>
     <%= link_to "apagar", route_path(@route), :method=> "delete", :class => "btn btn-danger" %>
     <% end %>
