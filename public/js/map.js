@@ -19,6 +19,27 @@ var Map = function() {
 			e.preventDefault();
 		});
 
+		var center = new google.maps.LatLng(-33, 151);
+
+		if('geolocation' in navigator) {
+			function show_map(position) {
+				new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+			}
+
+			function handle_error(e) {
+				console.log(e);
+			}
+
+			var geoOptions = {
+				enableHighAccuracy: true,
+				timeout: 30000,
+				maximumAge: 3000
+			};
+
+			navigator.geolocation.getCurrentPosition(show_map, handle_error, geoOptions);	
+		};
+		
+
 		var Map = Backbone.View.extend({
 			el: "#map_canvas",
 			map: null,
