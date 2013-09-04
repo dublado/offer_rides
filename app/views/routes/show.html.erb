@@ -8,7 +8,8 @@
 <%= render :file => 'uicomponents/map' %>
 <div class="route_data">
 	<div id="route_steps_data">
-	<% if @route.user != current_user then %>
+
+
 	  <% if  @route.user.avatar_url then %>
 	  <img src="<%= @route.user.avatar_url %>"  />
 	  <% end %>
@@ -16,6 +17,14 @@
 	  <i class="glyphicon glyphicon-envelope"></i> <%= @route.user.email %> - 
 	  <i class="glyphicon glyphicon-earphone"></i> XXXX-XXXX - 
 
+		<br /><span>Disponibilidade na semana:</span>
+		<%
+		days = [:mon, :tue, :wed, :thu, :fri, :sat, :sun]
+		days.each do |d|
+		key = "key_day_names." + d.to_s
+		%>
+		<%= if @route[d] then raw("<strong>" + t(key) + "</strong>") else t key end %>
+		<% end %>
 
 		<% if @route.observation then %>
 		<br />
@@ -29,7 +38,6 @@
 	<%= link_to raw("<span class='glyphicon glyphicon glyphicon-ok-circle'></span> favoritar"), favorite_add_route_path(@route), :class => "btn btn-success favorite_item", :data => { :type => "put" } %>
 		<% end %>
 	<br /><br />
-	<% end %>
 	
 	<ul>
 	

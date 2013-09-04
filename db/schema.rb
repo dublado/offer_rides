@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904162147) do
+ActiveRecord::Schema.define(:version => 20130904163507) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -41,6 +41,13 @@ ActiveRecord::Schema.define(:version => 20130904162147) do
     t.text     "steps"
     t.string   "period",        :limit => 10
     t.text     "observation"
+    t.boolean  "mon"
+    t.boolean  "tue"
+    t.boolean  "wed"
+    t.boolean  "thu"
+    t.boolean  "fri"
+    t.boolean  "sat"
+    t.boolean  "sun"
   end
 
   create_table "users", :force => true do |t|
