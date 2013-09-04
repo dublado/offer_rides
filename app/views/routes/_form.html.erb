@@ -20,12 +20,17 @@
   <div class="form-group">
     <%= f.label :start_address %>
     <%= f.text_field :start_address, :class => "form-control", :placeholder => "Rua, número, bairro, cidade..." %>
-  
+  </div>
+  <div class="form-group">
     <%= f.label :end_address %>
     <%= f.text_field :end_address, :class => "form-control", :placeholder => "Rua, número, bairro, cidade..." %>
-
+</div>
+  <div class="form-group">
     <%= f.label :period %>
     <%= select_tag("route[period]", options_for_select(@route.periods, @route.period?)) %>
+</div>
+  <div class="form-group">
+    <%= f.text_area :observation, :placeholder => "Informe observações adicionais...", :class => "form-control", :rows => 3 %>
 
 
   </div>

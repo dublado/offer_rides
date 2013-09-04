@@ -1,5 +1,5 @@
 class Route < ActiveRecord::Base
-  attr_accessible :end_point, :start_point, :path, :start_address, :end_address, :steps, :period
+  attr_accessible :end_point, :start_point, :path, :start_address, :end_address, :steps, :period, :observation
 
   belongs_to :user
 
