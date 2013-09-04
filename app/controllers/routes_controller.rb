@@ -56,7 +56,7 @@ class RoutesController < ApplicationController
 
     respond_to do |format|
       if @route.save
-        format.html { redirect_to user_routes_path(current_user), notice: 'Rota criada' }
+        format.html { redirect_to user_route_path(current_user, @route), notice: 'Rota criada' }
         format.json { render json: @route, status: :created, location: @route }
       else
         format.html { render action: "new" }
@@ -74,7 +74,7 @@ class RoutesController < ApplicationController
 
     respond_to do |format|
       if @route.update_attributes(params[:route])
-        format.html { redirect_to user_routes_path(current_user), notice: 'Route atualizada' }
+        format.html { redirect_to user_route_path(current_user, @route), notice: 'Route atualizada' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

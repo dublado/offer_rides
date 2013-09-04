@@ -226,3 +226,7 @@ pt-BR:
       fri: "Sex"
       sat: "Sab"
       sun: "Dom"
+  periods:
+    morning: "Manhã"
+    afternoon: "Tarde"
+    night: "Noite"

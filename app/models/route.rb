@@ -17,7 +17,9 @@ class Route < ActiveRecord::Base
   end
 
   def period
-    read_attribute(:period).to_sym
+    if read_attribute(:period) then
+      read_attribute(:period).to_sym
+    end
   end
 
   def period=(value)
