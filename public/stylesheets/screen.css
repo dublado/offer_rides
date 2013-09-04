@@ -73,6 +73,12 @@ nav {
 }
 
 /* line 12, ../sass/screen.scss */
+header {
+  margin: 20px 0;
+  border-bottom: 1px solid #DADADA;
+}
+
+/* line 17, ../sass/screen.scss */
 #notice {
   position: absolute;
   margin: 0 auto;
@@ -84,39 +90,37 @@ nav {
   top: 100px;
 }
 
-/* line 23, ../sass/screen.scss */
+/* line 28, ../sass/screen.scss */
 form footer {
   margin-top: 20px;
 }
 
-/* line 27, ../sass/screen.scss */
+/* line 32, ../sass/screen.scss */
 #routes_overlay {
-  position: absolute;
-  top: 260px;
-  padding-left: 20px;
+  /*
+  position: absolute; top: 260px;  padding-left: 20px;
+  */
 }
-/* line 30, ../sass/screen.scss */
+/* line 37, ../sass/screen.scss */
 #routes_overlay span {
   padding-left: 0 !important;
 }
-/* line 34, ../sass/screen.scss */
+/* line 41, ../sass/screen.scss */
 #routes_overlay ul {
   margin-bottom: 0;
 }
 
-/* line 39, ../sass/screen.scss */
+/* line 46, ../sass/screen.scss */
 .scrollfeed {
   max-height: 450px;
   overflow-y: auto;
 }
 
-/* line 44, ../sass/screen.scss */
+/* line 51, ../sass/screen.scss */
 #route_steps_data {
-  height: 300px;
-  overflow-y: scroll;
   margin-top: 20px;
 }
-/* line 48, ../sass/screen.scss */
+/* line 54, ../sass/screen.scss */
 #route_steps_data ul {
   padding-left: 0;
 }

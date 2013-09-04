@@ -2,11 +2,11 @@
 <%= render :file => 'uicomponents/menu', :locals => { :menu => "available"} %>
 </div>
 
-<aside class="col-md-12">
-	<%= render :file => 'uicomponents/map' %>
-	<div class="current_route_data"></div>
+<div class="col-md-4" id="routes_overlay">
+<%= render :file => 'uicomponents/routeslist', :locals => { :routes => @routes} %>	
 </div>
 
-<div class="col-md-3" id="routes_overlay">
-<%= render :file => 'uicomponents/routeslist', :locals => { :routes => @routes} %>	
+<aside class="col-md-8">
+	<%= render :file => 'uicomponents/map' %>
+	<div class="current_route_data"></div>
 </div>

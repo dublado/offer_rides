@@ -21,10 +21,15 @@ class UsersController < ApplicationController
   end
 
   def watching
-  	##TODO: alterar para pegar os que ele tem preferência
 
     current_user.favorites
   	##@routes = current_user.routes.paginate(:page => params[:page], :per_page => 10)
     @routes = current_user.favorites.paginate(:page => params[:page], :per_page => 5)
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @routes }
+    end
+
   end
 end

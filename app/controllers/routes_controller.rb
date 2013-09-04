@@ -119,5 +119,10 @@ class RoutesController < ApplicationController
   def search
     logger.info params[:k]
     @routes = Route.paginate(:page => params[:page], :per_page => 10, :conditions => ["steps like ?", "%#{params[:k]}%"])
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @routes }
+    end
   end
 end

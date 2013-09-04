@@ -1,4 +1,35 @@
 var Map = function() {
+
+	/* routes */
+	var Route = Backbone.Model.extend({
+		defaults: {
+			start_point: null,
+			end_point: null
+		}
+	});
+
+	var RoutesCollection = Backbone.Collection.extend({
+		model: Route,
+		url: "/routes.json",
+		initialize:function(){
+			console.log('RoutesCollection Started');
+		}
+	});
+
+	var pinColorStart = "FF0000";
+	var pinColorEnd = "FFFF00";
+
+	var pinImageStart = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorStart,
+    new google.maps.Size(21, 34),
+    new google.maps.Point(0,0),
+    new google.maps.Point(10, 34));
+
+    var pinImageEnd = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorEnd,
+    new google.maps.Size(21, 34),
+    new google.maps.Point(0,0),
+    new google.maps.Point(10, 34));
+
+
 	this.init = function() {
 		$("#trace_route").on("click", function(e) {
 
@@ -47,7 +78,7 @@ var Map = function() {
 			map: null,
 			rebuild_map : false,
 			map_options : {
-				center: new google.maps.LatLng(-33, 151),
+				center: new google.maps.LatLng(-23.7162631, -46.64074949999997),
 				zoom: 8,
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				mapTypeControl: true,
@@ -77,22 +108,22 @@ var Map = function() {
 			render: function() {
 				var data = this.model.toJSON(),
 					el = this.el;
-
 				if($("#keep_directions").length == 0) {
 					this.map = new google.maps.Map(el, this.map_options);	
 				}
-				
 				
 				var map = this.map;
 				
 
 				var marker1 = new google.maps.Marker({
 					map: map,
-					position: data.start_point
+					position: data.start_point,
+					icon: pinImageStart
 				}),
 					marker2 = new google.maps.Marker({
 					map: map,
-					position: data.end_point
+					position: data.end_point,
+					icon: pinImageEnd
 				});
 
 				var request = {
@@ -107,6 +138,7 @@ var Map = function() {
 				  draggable: true,
 				  map: map
 				};
+
 				if(data.color) {
 					rendererOptions.polylineOptions = {
 					  	strokeColor: data.color
@@ -186,13 +218,6 @@ var Map = function() {
 		});
 
 
-		var Route = Backbone.Model.extend({
-			defaults: {
-				start_point: null,
-				end_point: null
-			}
-		});
-
 		var route = new Route(),
 			my_map = new Map({model: route}),
 			geocoder = new google.maps.Geocoder(),
@@ -218,11 +243,11 @@ var Map = function() {
 		};
 
 		$(document).on("click", "a.show_map", function() {
-			var c = ($(this).parent().data("color")),
+			var c = ($(this).parent().parent().data("color")),
 				url = $(this).attr("href");
 
 			$(".routes_list li").removeClass("active");
-			$(this).parent().addClass("active");
+			$(this).parent().parent().addClass("active");
 
 			$
 			.when( $.ajax({url: url}) )
@@ -237,7 +262,7 @@ var Map = function() {
 				for(var i=0; i<data.length; i++) {
 					if(data[i]!="")
 						steps.push({location: _makeln(data[i])})
-				}
+				};
 
 				route.set({
 					"start_point": s,
@@ -277,10 +302,58 @@ var Map = function() {
 			
 			event.preventDefault();
 		});
+
+		this.map = my_map;
+
+
 	};
 
 	var _makeln = function(str) {
 		var arr = str.replace("(", "").replace(")", "").split(",");
 		return new google.maps.LatLng(arr[0], arr[1]);
 	};
-}
+
+	this.draw_markers = function(url) {
+		var self = this;
+		
+		var available_routes = new RoutesCollection();
+		available_routes.url = url;
+		available_routes.fetch({
+			reset: true,
+			success: function() {
+				console.log("collection fetched");
+			}
+		});
+
+		available_routes.bind("reset", function() {
+			_.each(this.toJSON(), function(item) {
+
+				var marker = new google.maps.Marker({
+					map: self.map.map,
+					position: _makeln(item.start_point),
+					icon: pinImageStart
+				});
+
+				var marker = new google.maps.Marker({
+					map: self.map.map,
+					position: _makeln(item.end_point),
+					icon: pinImageEnd
+				});
+				
+
+			});
+
+		});
+
+		var html = "<br /><img src='" + pinImageStart.url + "' /> ponto de partida";
+		html += " - <img src='" + pinImageEnd.url + "' /> ponto de chegada";
+		
+		$(".current_route_data").html(html);
+	};
+
+
+
+
+
+};
+

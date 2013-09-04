@@ -1,7 +1,24 @@
-
-<nav class="nav nav-pills">
+<header class="clearfix">
+<nav class="nav nav-pills col-md-9">
 	<li <% if menu == "available" then %>class="active"<% end %>><%= link_to 'Ver rotas', routes_path %></li>
 	<li <% if menu == "offer" then %>class="active"<% end %>><%= link_to 'Oferecer carona', new_route_path%></li>
 	<li <% if menu == "mine" then %>class="active"<% end %>><%= link_to 'Minhas rotas', profile_path %></li>
 	<li <% if menu == "watching" then %>class="active"<% end %>><%= link_to 'Favoritas', watching_users_path %></li>
+	<li>
+	<%= render :file => 'uicomponents/search' %>
+	</li>
 </nav>
+
+
+  <% if current_user then %>
+  <div class="col-md-3">
+    <% if current_user.avatar_url then %>
+    <img src="<%= current_user.avatar_url %>"  />
+    <% end %>
+    <%= current_user.label %>
+    <%= link_to "Sair", destroy_user_session_path, :method => "delete" %>
+  </div>
+  
+  <% end %>
+
+</header>

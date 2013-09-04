@@ -3,13 +3,15 @@
 <ul class="routes_list list-group">
 <% routes.each_with_index do |r, index| %>
 <li class="list-group-item row-fluid clearfix" <% if @colors then %>style="color: <%= @colors[index] %>" data-color="<%= @colors[index] %>"<% end %>>
-	<span class="col-md-10">De <%= r.start_address %> para <%= r.end_address %></span>
+	<span class="col-md-8">De <%= r.start_address %><br />p/ <%= r.end_address %></span>
 	
+	<span class="col-md-4">
 	<%= link_to raw('<span class="glyphicon glyphicon-picture"></span>'), route_path(r), :class => "show_map btn btn-primary", :title => "ver" %>
 	<% if can? :manage, r %>
 		<%= link_to raw('<span class="glyphicon glyphicon-edit"></span>'), edit_route_path(r), :class => "btn btn-primary", :title => "editar" %>
 		
 	<% end %>
+	</span>
 
 <% end %>
 <% if @routes.total_pages != @routes.current_page then %>

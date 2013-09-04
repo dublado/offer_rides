@@ -2,11 +2,11 @@
 <input type="hidden" id="keep_directions" />
 <%= render :file => 'uicomponents/menu', :locals => { :menu => "watching"} %>
 </div>
-<aside class="col-md-12">
-	<%= render :file => 'uicomponents/map' %>
+<div class="col-md-4" id="routes_overlay">
+	<% @colors = ["#FF0000", "#DD0000", "#BB0000", "#990000", "#770000", "#550000"] %>
+	<%= render :file => 'uicomponents/routeslist', :locals => { :routes => @routes, :colors => @colors} %>
 </div>
 
-<div class="col-md-3" id="routes_overlay">
-<% @colors = ["#FF0000", "#DD0000", "#BB0000", "#990000", "#770000", "#550000"] %>
-<%= render :file => 'uicomponents/routeslist', :locals => { :routes => @routes, :colors => @colors} %>
-</div>
+<aside class="col-md-8">
+<%= render :file => 'uicomponents/map' %>
+</aside>

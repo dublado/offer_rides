@@ -1,5 +1,9 @@
-<div class="col-md-8">
+<div class="col-md-12">
 <%= render :file => 'uicomponents/menu', :locals => { :menu => "offer"} %>
+</div>
+
+<div class="col-md-4">
+
 <%= form_for @route, html: { role: "form"}  do |f| %>
   <%= f.hidden_field :start_point %>
   <%= f.hidden_field :end_point %>
@@ -49,9 +53,7 @@
 
   <a href="#" id="trace_route" class="btn btn-success">traçar rota</a>
 
-  <div id="route_steps_data" class="col-md-12">
-    <ul class="list-group"></ul>
-  </div>
+  
 
   <footer class="col-md-12">
     <%= link_to 'Voltar', routes_path, :class => "btn btn-primary" %>
@@ -62,6 +64,9 @@
   </footer>
 <% end %>
 </div>
-<aside class="col-md-4">
-  <div id="map_canvas" style="height:400px; border:1px solid #FF0000;" data-start="" data-end=""></div>
+<aside class="col-md-8">
+  <%= render :file => 'uicomponents/map' %>
+  <div id="route_steps_data" class="col-md-12">
+    <ul class="list-group"></ul>
+  </div>
 </div>

@@ -9,6 +9,11 @@ nav {
 	margin-bottom: 20px !important;
 }
 
+header {
+	margin: 20px 0;
+	border-bottom: 1px solid #DADADA;
+}
+
 #notice {
 	position: absolute;
 	margin: 0 auto;
@@ -25,7 +30,9 @@ form footer {
 }
 
 #routes_overlay {
+	/*
 	position: absolute; top: 260px;  padding-left: 20px;
+	*/
 
 	span {
 		padding-left: 0 !important;
@@ -42,8 +49,7 @@ form footer {
 }
 
 #route_steps_data {
-	height: 300px;
-	overflow-y: scroll;
+	
 	margin-top: 20px;
 	ul {
 		padding-left: 0;
