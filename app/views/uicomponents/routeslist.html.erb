@@ -2,7 +2,7 @@
 <div class="scrollfeed">
 <ul class="routes_list list-group">
 <% routes.each_with_index do |r, index| %>
-<li class="list-group-item row-fluid clearfix" <% if @colors then %>style="color: <%= @colors[index] %>" data-color="<%= @colors[index] %>"<% end %>>
+<li class="list-group-item row-fluid clearfix" <% if @colors then @color = "%06x" % (rand * 0xffffff) %>style="color: #<%= @color %>" data-color="#<%= @color %>"<% end %>>
 	<span class="col-md-8">De <%= r.start_address %><br />p/ <%= r.end_address %></span>
 	
 	<span class="col-md-4">

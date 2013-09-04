@@ -246,9 +246,11 @@ var Map = function() {
 			var c = ($(this).parent().parent().data("color")),
 				url = $(this).attr("href");
 
-			$(".routes_list li").removeClass("active");
-			$(this).parent().parent().addClass("active");
-
+			if(!c) {
+				$(".routes_list li").removeClass("active");
+				$(this).parent().parent().addClass("active");	
+			}
+			
 			$
 			.when( $.ajax({url: url}) )
 			.done(function(responseText) {
