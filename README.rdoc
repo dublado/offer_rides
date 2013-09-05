@@ -7,3 +7,8 @@ App de gerenciamento de caronas
 - usuário visualiza rotas de outros usuários
 - usuário adiciona rotas como favoritas para visualizar em uma página única
 - visualização de mapas integrada com Google Maps
+
+== Observações
+- para usar autenticação com Facebook, foi usado esse tutorial: http://blog.yangtheman.com/2012/02/09/facebook-connect-with-rails-omniauth-devise/
+- está sendo usado Compass (http://compass-style.org/) e SASS para pré-compilar CSS. Para fazer alterações, rodar "compass watch" dentro do diretório /public
+- troque a chave config.googlemapskey em application.rb para o valor de uma key própria da Google API

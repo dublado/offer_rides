@@ -12,7 +12,7 @@
 
 /config/database.yml
 
-/config/initializers/omniauth.rb
+#/config/initializers/omniauth.rb
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
