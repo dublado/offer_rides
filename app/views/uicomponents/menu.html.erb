@@ -16,7 +16,7 @@
     <img src="<%= current_user.avatar_url %>"  />
     <% end %>
     <%= current_user.label %>
-    <%= link_to "Sair", destroy_user_session_path, :method => "delete" %>
+    <%= link_to "Sair", destroy_user_session_path, :method => "delete", :class => "btn btn-danger" %>
   </div>
   
   <% end %>
